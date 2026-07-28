@@ -373,7 +373,7 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
       <button class="f-pill" data-days="3">Últimos 3 días</button>
       <button class="f-pill" data-days="7">Últimos 7 días</button>
       <span class="f-custom">
-        Personalizado: <input type="date" id="d-from"> – <input type="date" id="d-to">
+        Personalizado: <input type="date" id="d-from"> - <input type="date" id="d-to">
       </span>
       <span class="f-range-label" id="range-label"></span>
     </div>
@@ -382,19 +382,19 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     <div class="bd-kpi-row">
       <div class="bd-kpi">
         <div class="label">Inversión</div>
-        <div class="value"><span class="unit">S/</span> <span id="k-spend">—</span></div>
+        <div class="value"><span class="unit">S/</span> <span id="k-spend">-</span></div>
       </div>
       <div class="bd-kpi">
         <div class="label">Leads (formularios)</div>
-        <div class="value" id="k-leads">—</div>
+        <div class="value" id="k-leads">-</div>
       </div>
       <div class="bd-kpi">
         <div class="label">Costo por lead</div>
-        <div class="value"><span class="unit">S/</span> <span id="k-cpl">—</span></div>
+        <div class="value"><span class="unit">S/</span> <span id="k-cpl">-</span></div>
       </div>
       <div class="bd-kpi">
         <div class="label">Conv. visita → lead</div>
-        <div class="value"><span id="k-cvr">—</span><span class="unit">%</span></div>
+        <div class="value"><span id="k-cvr">-</span><span class="unit">%</span></div>
       </div>
     </div>
   </section>
@@ -410,45 +410,45 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
         <g id="segs"></g>
         <g id="labels"></g>
       </svg>
-      <p class="bd-faint" style="font-size:12px; margin:10px 0 0;">Forma ilustrativa — las cifras mandan. 💡 Posa el cursor sobre cada etapa para ver su definición.</p>
+      <p class="bd-faint" style="font-size:12px; margin:10px 0 0;">Forma ilustrativa (las cifras mandan). 💡 Posa el cursor sobre cada etapa para ver su definición.</p>
     </div>
   </section>
 
   <!-- UNIT ECONOMICS -->
   <section class="bd-section">
     <span class="bd-kicker">Visión Growth</span>
-    <h2>Unit economics — costo por etapa</h2>
+    <h2>Unit economics: costo por etapa</h2>
     <p class="bd-muted">Costo de cada paso en el período filtrado · hover para ver la fórmula</p>
     <div class="cost-grid" id="cost-grid">
       <div class="cost-tile">
         <span class="label" data-tip="CPM = inversión ÷ alcance × 1,000. Lo que pagas por exponer la marca a mil personas. Es el precio de la parte alta del embudo (awareness).">CPM · mil alcanzados</span>
-        <div class="value"><span class="unit">S/</span> <span id="c-reach">—</span></div>
+        <div class="value"><span class="unit">S/</span> <span id="c-reach">-</span></div>
         <div class="sub">por cada 1,000 personas</div>
       </div>
       <div class="cost-tile">
         <span class="label" data-tip="CPC = inversión ÷ clics en el enlace. Lo que pagas por cada persona que muestra interés y hace clic hacia la web.">CPC · clic</span>
-        <div class="value"><span class="unit">S/</span> <span id="c-clicks">—</span></div>
+        <div class="value"><span class="unit">S/</span> <span id="c-clicks">-</span></div>
         <div class="sub">por clic en el enlace</div>
       </div>
       <div class="cost-tile">
         <span class="label" data-tip="Inversión ÷ visitas a la página. Siempre es mayor que el CPC: la diferencia es el 'impuesto' de los clics que se pierden antes de que cargue la landing.">Costo · visita</span>
-        <div class="value"><span class="unit">S/</span> <span id="c-lpv">—</span></div>
+        <div class="value"><span class="unit">S/</span> <span id="c-lpv">-</span></div>
         <div class="sub">por visita real a la web</div>
       </div>
       <div class="cost-tile">
-        <span class="label" data-tip="CPL = inversión ÷ formularios completados. El costo de adquisición de un lead — la métrica núcleo de esta campaña.">CPL · lead</span>
-        <div class="value"><span class="unit">S/</span> <span id="c-leads">—</span></div>
+        <span class="label" data-tip="CPL = inversión ÷ formularios completados. El costo de adquisición de un lead: la métrica núcleo de esta campaña.">CPL · lead</span>
+        <div class="value"><span class="unit">S/</span> <span id="c-leads">-</span></div>
         <div class="sub">por formulario completado</div>
       </div>
       <div class="cost-tile">
         <span class="label" data-tip="Inversión ÷ inicios de compra. Lo que cuesta llevar a alguien hasta el checkout de un plan.">Costo · checkout</span>
-        <div class="value"><span class="unit">S/</span> <span id="c-ic">—</span></div>
+        <div class="value"><span class="unit">S/</span> <span id="c-ic">-</span></div>
         <div class="sub">por inicio de compra</div>
       </div>
       <div class="cost-tile">
-        <span class="label" data-tip="CAC = inversión ÷ compras. El costo real de adquirir un cliente pagante. Mientras no haya compras, no es calculable — toda la inversión está 'río arriba'.">CAC · compra</span>
+        <span class="label" data-tip="CAC = inversión ÷ compras. El costo real de adquirir un cliente pagante. Mientras no haya compras, no es calculable: toda la inversión está 'río arriba'.">CAC · compra</span>
         <span class="eye-badge" style="cursor:help; font-size:14px; margin-left:4px;" data-tip="EYE">👁</span>
-        <div class="value"><span id="c-buy">—</span></div>
+        <div class="value"><span id="c-buy">-</span></div>
         <div class="sub">por cliente pagante</div>
       </div>
     </div>
@@ -456,9 +456,9 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     <div class="bd-callout" style="margin-top:20px;">
       <strong>Lectura Growth</strong> <span class="bd-faint">(histórico completo)</span>
       <ul>
-        <li><strong>Clic barato, visita cara:</strong> CPC S/ 0.49 pero S/ 0.86 por visita — el 43% de los clics se pierde antes de que cargue la landing. Revisar velocidad en móvil.</li>
-        <li><strong>CPL sano:</strong> S/ 9.56 con ticket de S/ 990 — cerrar 1 de cada ~100 leads ya paga la pauta.</li>
-        <li><strong>Prioridad:</strong> el checkout cuesta S/ 51.60 y no registra compras con tarjeta 👁 — revisar checkout→pago y cruzar con ventas por transferencia antes de escalar inversión.</li>
+        <li><strong>Clic barato, visita cara:</strong> CPC S/ 0.49 pero S/ 0.86 por visita, porque el 43% de los clics se pierde antes de que cargue la landing. Revisar velocidad en móvil.</li>
+        <li><strong>CPL sano:</strong> S/ 9.56 con ticket de S/ 990. Cerrar 1 de cada ~100 leads ya paga la pauta.</li>
+        <li><strong>Prioridad:</strong> el checkout cuesta S/ 51.60 y no registra compras con tarjeta 👁. Revisar checkout→pago y cruzar con ventas por transferencia antes de escalar inversión.</li>
       </ul>
     </div>
   </section>
@@ -487,7 +487,7 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
       <ul>
         <li>El 25 y 26 de julio la campaña no tuvo entrega (sin inversión).</li>
         <li>El alcance de varios días suma alcances diarios: una persona puede contarse más de una vez, por lo que puede diferir levemente del alcance único de Meta.</li>
-        <li>👁 "Compraron" = evento Purchase del píxel, que <strong>solo mide compras con tarjeta</strong> — las transferencias no se registran, así que las ventas reales pueden ser mayores.</li>
+        <li>👁 "Compraron" = evento Purchase del píxel, que <strong>solo mide compras con tarjeta</strong>: las transferencias no se registran, así que las ventas reales pueden ser mayores.</li>
       </ul>
     </details>
   </section>
@@ -500,7 +500,7 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 </main>
 
 <script>
-/* ================= Data diaria (V1 + V2 sumadas) — Meta Ads API, 28-jul-2026 ================= */
+/* ================= Data diaria (V1 + V2 sumadas): Meta Ads API, 28-jul-2026 ================= */
 const DAILY = [
   { date: '2026-07-24', reach: 1294, clicks:  28, lpv:  10, leads:  0, ic: 0, buy: 0, spend:  15.00 },
   { date: '2026-07-25', reach:    0, clicks:   0, lpv:   0, leads:  0, ic: 0, buy: 0, spend:   0    },
@@ -525,7 +525,7 @@ const STAGES = [
   { key: 'ic',     name: 'Inicio de compra',       rate: ['leads',  'de leads'],
     def: '<span class="t-title">Inicio de compra</span><br>Evento "InitiateCheckout" del píxel: comenzaron el proceso de pago de un plan (Solo Registro o Nuevo Naming).' },
   { key: 'buy',    name: 'Compraron',              rate: ['ic',     'de checkouts'], eye: true,
-    def: '<span class="t-title">Compraron</span><br>Evento "Purchase" del píxel: pago confirmado. El fondo del embudo — clientes reales. 👁 Solo registra compras con tarjeta; las transferencias no se miden.' },
+    def: '<span class="t-title">Compraron</span><br>Evento "Purchase" del píxel: pago confirmado. El fondo del embudo: clientes reales. 👁 Solo registra compras con tarjeta; las transferencias no se miden.' },
 ];
 const EYE_TIP = '<span class="t-title">👁 Ojo con esta métrica</span><br>Nuestro píxel solo mide compras finalizadas con tarjeta. No tiene manera de medir las compras por transferencia, así que las ventas reales pueden ser mayores a las que muestra este embudo.';
 const COLORS = ['--bd-seq-2','--bd-seq-3','--bd-seq-4','--bd-seq-5','--bd-seq-6','--bd-navy'];
@@ -613,7 +613,7 @@ function renderFunnel() {
       labels.appendChild(txt({ x: 558, y: yM + 5, class: 'stage-pct', id: 'r-' + s.key }, {}));
     } else {
       /* ---- Móvil: embudo a la izquierda, etiquetas a la derecha (todas las etapas),
-              con línea conectora en cascada — como la referencia de embudo clásica. ---- */
+              con línea conectora en cascada: como la referencia de embudo clásica. ---- */
       const tx = 245;
       const conn = document.createElementNS(NSVG, 'polyline');
       conn.setAttribute('points', `${cx + hwM + 4},${yM} ${tx - 10},${yM}`);
@@ -666,8 +666,8 @@ function applyRange(from, to) {
   // KPIs
   document.getElementById('k-spend').textContent = fmtMoney(T.spend);
   document.getElementById('k-leads').textContent = fmtInt(T.leads);
-  document.getElementById('k-cpl').textContent = T.leads ? fmtMoney(T.spend / T.leads) : '—';
-  document.getElementById('k-cvr').textContent = T.lpv ? (100 * T.leads / T.lpv).toFixed(1) : '—';
+  document.getElementById('k-cpl').textContent = T.leads ? fmtMoney(T.spend / T.leads) : '-';
+  document.getElementById('k-cvr').textContent = T.lpv ? (100 * T.leads / T.lpv).toFixed(1) : '-';
 
   // Embudo
   STAGES.forEach(s => {
@@ -676,18 +676,18 @@ function applyRange(from, to) {
     let pct = '100%', sub = 'del período';
     if (s.rate) {
       const base = T[s.rate[0]];
-      pct = base ? `${(100 * T[s.key] / base).toFixed(1)}%` : '—';
+      pct = base ? `${(100 * T[s.key] / base).toFixed(1)}%` : '-';
       sub = s.rate[1];
     }
     r.innerHTML = `${pct} <tspan class="sub">${sub}</tspan>`;
   });
 
   // Unit economics: costo por etapa
-  document.getElementById('c-reach').textContent  = T.reach  ? fmtMoney(T.spend / T.reach * 1000) : '—';
-  document.getElementById('c-clicks').textContent = T.clicks ? fmtMoney(T.spend / T.clicks) : '—';
-  document.getElementById('c-lpv').textContent    = T.lpv    ? fmtMoney(T.spend / T.lpv) : '—';
-  document.getElementById('c-leads').textContent  = T.leads  ? fmtMoney(T.spend / T.leads) : '—';
-  document.getElementById('c-ic').textContent     = T.ic     ? fmtMoney(T.spend / T.ic) : '—';
+  document.getElementById('c-reach').textContent  = T.reach  ? fmtMoney(T.spend / T.reach * 1000) : '-';
+  document.getElementById('c-clicks').textContent = T.clicks ? fmtMoney(T.spend / T.clicks) : '-';
+  document.getElementById('c-lpv').textContent    = T.lpv    ? fmtMoney(T.spend / T.lpv) : '-';
+  document.getElementById('c-leads').textContent  = T.leads  ? fmtMoney(T.spend / T.leads) : '-';
+  document.getElementById('c-ic').textContent     = T.ic     ? fmtMoney(T.spend / T.ic) : '-';
   document.getElementById('c-buy').innerHTML      = T.buy
     ? `<span class="unit">S/</span> ${fmtMoney(T.spend / T.buy)}`
     : '<span style="font-size:15px; color:var(--bd-text-2);">Sin compras aún</span>';
