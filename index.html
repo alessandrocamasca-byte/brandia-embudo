@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brandia · Embudo de Leads Jul 2026</title>
+<meta name="robots" content="noindex">
+</head>
+<body class="bd-report">
+<style>
+/* ============================================================
+   BRANDIA — Design System para reportes HTML
+   v1.0 · 2026-07-28
+   Tokens extraídos de brandia.pe (CSS vars del sitio) +
+   paleta de gráficos validada (CVD-safe, contraste ≥3:1).
+   Los reportes son documentos claros e imprimibles; los
+   gráficos van SIEMPRE sobre superficie blanca (tarjetas).
+   ============================================================ */
+
+:root {
+  /* ---- Marca ---- */
+  --bd-navy:        #03283a;   /* color primario de marca (fondos hero) */
+  --bd-navy-deep:   #031828;
+  --bd-navy-mid:    #041e2e;
+  --bd-cyan:        #00bdff;   /* acento de marca — solo sobre navy, NO para texto sobre blanco */
+  --bd-cyan-dark:   #0090c4;   /* acento utilizable sobre blanco */
+  --bd-cyan-strong: #007aa6;   /* acento con contraste AA para texto pequeño */
+
+  /* ---- Superficies del reporte (base: tokens --adm-* del sitio) ---- */
+  --bd-bg:            #f7f8f8;
+  --bd-surface:       #ffffff;
+  --bd-surface-2:     #f2f4f4;
+  --bd-accent-soft:   rgba(0, 189, 255, .10);
+  --bd-border:        #e5e8e8;
+  --bd-border-strong: #d2d8da;
+  --bd-shadow-sm:     0 1px 2px rgba(0,0,0,.03);
+  --bd-shadow-md:     0 4px 16px rgba(3,40,58,.07);
+
+  /* ---- Texto ---- */
+  --bd-heading:  #03283a;
+  --bd-text:     #16242e;
+  --bd-text-2:   #5b6b76;
+  --bd-text-3:   #93a1ab;
+  /* Sobre navy: */
+  --bd-on-navy:        #ffffff;
+  --bd-on-navy-muted:  rgba(255,255,255,.65);
+
+  /* ---- Estados (con fondo y borde propios; siempre icono + texto, nunca solo color) ---- */
+  --bd-success:        #177245;
+  --bd-success-bg:     #e9f6ee;
+  --bd-success-border: #bfe5cd;
+  --bd-warning:        #92520c;
+  --bd-warning-bg:     #fdf3e1;
+  --bd-warning-border: #f3dcae;
+  --bd-danger:         #b42318;
+  --bd-danger-bg:      #fdeceb;
+  --bd-danger-border:  #f6c6c2;
+  --bd-info:           #155e9e;
+  --bd-info-bg:        #eaf3fb;
+  --bd-info-border:    #c4ddf3;
+
+  /* ---- Gráficos: paleta categórica (orden FIJO, nunca ciclar;
+          serie 6+ se agrupa en "Otros". Validada CVD ΔE≥10.2,
+          visión normal ΔE≥16.7, contraste ≥3:1 sobre blanco) ---- */
+  --bd-cat-1: #0090c4;  /* cyan Brandia */
+  --bd-cat-2: #ea7317;  /* naranja */
+  --bd-cat-3: #db2777;  /* magenta */
+  --bd-cat-4: #b45309;  /* ámbar oscuro */
+  --bd-cat-5: #7c3aed;  /* violeta */
+  --bd-cat-6: #16a34a;  /* verde */
+  --bd-cat-other: #93a1ab; /* "Otros" — gris, siempre al final */
+
+  /* ---- Gráficos: rampa secuencial (magnitud, un solo tono cyan claro→oscuro) ---- */
+  --bd-seq-1: #e3f6ff;
+  --bd-seq-2: #a8e2ff;
+  --bd-seq-3: #5cc9f5;
+  --bd-seq-4: #00a5e0;
+  --bd-seq-5: #007aa6;
+  --bd-seq-6: #05506e;
+
+  /* ---- Gráficos: divergente (polaridad; neutro al centro, nunca un tono) ---- */
+  --bd-div-neg: #c05a10;   /* polo negativo (cálido) */
+  --bd-div-mid: #c7ccd1;   /* punto medio neutro gris */
+  --bd-div-pos: #007aa6;   /* polo positivo (frío, marca) */
+
+  /* ---- Tipografía ---- */
+  --bd-font: "Avenir Next", Avenir, "Nunito Sans", -apple-system, "Segoe UI",
+             Helvetica, Arial, sans-serif;
+  --bd-font-mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---- Geometría ---- */
+  --bd-radius:      12px;   /* .75rem — tarjetas y bloques */
+  --bd-radius-sm:   8px;
+  --bd-radius-pill: 50px;   /* botones y chips, sello de la marca */
+}
+
+/* ============ Base ============ */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bd-bg);
+  color: var(--bd-text);
+  font-family: var(--bd-font);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.bd-container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+
+/* ============ Tipografía ============ */
+body h1, body h2, body h3, body h4 {
+  color: var(--bd-heading);
+  line-height: 1.15;
+  margin: 0 0 .5em;
+}
+body h1 { font-size: 42px; font-weight: 400; letter-spacing: -1px; }
+body h1 strong { font-weight: 800; }
+body h2 { font-size: 26px; font-weight: 800; letter-spacing: -.3px; }
+body h3 { font-size: 19px; font-weight: 700; }
+body h4 { font-size: 15px; font-weight: 700; }
+body p  { margin: 0 0 1em; }
+.bd-muted   { color: var(--bd-text-2); }
+.bd-faint   { color: var(--bd-text-3); }
+
+/* Kicker: etiqueta de sección estilo brandia.pe ("BENEFICIOS", "EL PROCESO") */
+.bd-kicker {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--bd-cyan-strong);
+  margin-bottom: 10px;
+}
+
+/* ============ Portada / hero (navy de marca) ============ */
+.bd-cover {
+  background: linear-gradient(160deg, var(--bd-navy) 55%, var(--bd-navy-deep));
+  color: var(--bd-on-navy);
+  padding: 56px 0 48px;
+  border-bottom: 3px solid var(--bd-cyan);
+}
+.bd-cover h1, .bd-cover h2 { color: var(--bd-on-navy); }
+.bd-cover .bd-kicker { color: var(--bd-cyan); }
+.bd-cover .bd-muted  { color: var(--bd-on-navy-muted); }
+.bd-logo { font-size: 22px; font-weight: 800; letter-spacing: -.5px; color: var(--bd-on-navy); }
+.bd-logo .ia { color: var(--bd-cyan); }  /* la "A" de IA */
+
+/* ============ Secciones ============ */
+.bd-section { padding: 40px 0 8px; }
+
+/* ============ Tarjetas ============ */
+.bd-card {
+  background: var(--bd-surface);
+  border: 1px solid var(--bd-border);
+  border-radius: var(--bd-radius);
+  box-shadow: var(--bd-shadow-sm);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+/* ============ KPI / stat tiles ============ */
+.bd-kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.bd-kpi {
+  background: var(--bd-surface);
+  border: 1px solid var(--bd-border);
+  border-radius: var(--bd-radius);
+  padding: 18px 20px;
+}
+.bd-kpi .label { font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--bd-text-2); margin-bottom: 6px; }
+.bd-kpi .value { font-size: 34px; font-weight: 800; letter-spacing: -1px; color: var(--bd-heading); line-height: 1.1; }
+.bd-kpi .value .unit { font-size: 17px; font-weight: 600; color: var(--bd-text-2); }
+.bd-kpi .delta { font-size: 13px; font-weight: 600; margin-top: 4px; }
+.bd-kpi .delta.up   { color: var(--bd-success); }
+.bd-kpi .delta.down { color: var(--bd-danger); }
+.bd-kpi .delta.flat { color: var(--bd-text-2); }
+
+/* ============ Tablas ============ */
+.bd-table-wrap { overflow-x: auto; }
+table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.bd-table th {
+  text-align: left; font-size: 12px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--bd-text-2);
+  border-bottom: 2px solid var(--bd-border-strong);
+  padding: 10px 12px;
+}
+.bd-table td { padding: 10px 12px; border-bottom: 1px solid var(--bd-border); }
+.bd-table tr:last-child td { border-bottom: none; }
+.bd-table td.num, .bd-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.bd-table tbody tr:hover { background: var(--bd-accent-soft); }
+
+/* ============ Badges de estado (icono/símbolo + texto, nunca solo color) ============ */
+.bd-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700;
+  padding: 3px 12px;
+  border-radius: var(--bd-radius-pill);
+  border: 1px solid;
+}
+.bd-badge.success { color: var(--bd-success); background: var(--bd-success-bg); border-color: var(--bd-success-border); }
+.bd-badge.warning { color: var(--bd-warning); background: var(--bd-warning-bg); border-color: var(--bd-warning-border); }
+.bd-badge.danger  { color: var(--bd-danger);  background: var(--bd-danger-bg);  border-color: var(--bd-danger-border); }
+.bd-badge.info    { color: var(--bd-info);    background: var(--bd-info-bg);    border-color: var(--bd-info-border); }
+.bd-badge.neutral { color: var(--bd-text-2);  background: var(--bd-surface-2);  border-color: var(--bd-border-strong); }
+
+/* ============ Callouts ============ */
+.bd-callout {
+  border-left: 4px solid var(--bd-cyan-dark);
+  background: var(--bd-accent-soft);
+  border-radius: 0 var(--bd-radius-sm) var(--bd-radius-sm) 0;
+  padding: 14px 18px;
+  margin: 0 0 24px;
+}
+.bd-callout.warning { border-left-color: var(--bd-warning); background: var(--bd-warning-bg); }
+.bd-callout.danger  { border-left-color: var(--bd-danger);  background: var(--bd-danger-bg); }
+.bd-callout.success { border-left-color: var(--bd-success); background: var(--bd-success-bg); }
+
+/* ============ Gráficos ============ */
+.bd-chart-card { /* los gráficos SIEMPRE dentro de esta tarjeta blanca */
+  background: var(--bd-surface);
+  border: 1px solid var(--bd-border);
+  border-radius: var(--bd-radius);
+  padding: 20px 24px 16px;
+  margin-bottom: 24px;
+}
+.bd-chart-title { font-size: 15px; font-weight: 700; color: var(--bd-heading); margin: 0 0 2px; }
+.bd-chart-sub   { font-size: 13px; color: var(--bd-text-2); margin: 0 0 14px; }
+/* Leyenda: obligatoria con ≥2 series; chips con marca de color + texto en tinta de texto */
+.bd-legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--bd-text-2); margin: 10px 0 4px; }
+.bd-legend .item { display: inline-flex; align-items: center; gap: 6px; }
+.bd-legend .swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+/* Grid y ejes recesivos */
+.bd-chart svg .grid  { stroke: var(--bd-border); stroke-width: 1; }
+.bd-chart svg .axis  { fill: var(--bd-text-3); font-size: 11px; font-family: var(--bd-font); }
+.bd-chart svg .dlabel{ fill: var(--bd-text); font-size: 12px; font-weight: 600; font-family: var(--bd-font); }
+/* Tooltip flotante (hover por marca) */
+.bd-tooltip {
+  position: fixed; pointer-events: none; z-index: 50;
+  background: var(--bd-navy); color: #fff;
+  font-size: 12.5px; line-height: 1.45;
+  padding: 8px 12px; border-radius: var(--bd-radius-sm);
+  box-shadow: var(--bd-shadow-md);
+  opacity: 0; transition: opacity .12s;
+  max-width: 260px;
+}
+.bd-tooltip.show { opacity: 1; }
+.bd-tooltip .t-title { font-weight: 700; }
+
+/* ============ Botones / CTA (pill, sello de marca) ============ */
+.bd-btn {
+  display: inline-block;
+  font-family: var(--bd-font);
+  font-size: 14px; font-weight: 800;
+  padding: 12px 28px;
+  border-radius: var(--bd-radius-pill);
+  border: none; cursor: pointer; text-decoration: none;
+}
+.bd-btn.primary { background: var(--bd-cyan-dark); color: #fff; }
+.bd-btn.on-navy { background: #fff; color: var(--bd-cyan-strong); }
+.bd-btn.ghost   { background: transparent; color: var(--bd-cyan-strong); border: 1.5px solid var(--bd-cyan-dark); }
+
+/* ============ Pie de reporte ============ */
+.bd-footer {
+  margin-top: 48px;
+  padding: 28px 0 36px;
+  border-top: 1px solid var(--bd-border-strong);
+  font-size: 12.5px;
+  color: var(--bd-text-3);
+}
+
+/* ============ Móvil ============ */
+@media (max-width: 640px) {
+  .bd-container { padding: 0 18px; }
+  body h1 { font-size: 30px; letter-spacing: -.6px; }
+  body h2 { font-size: 21px; }
+  .bd-cover { padding: 36px 0 32px; }
+  .bd-section { padding: 28px 0 4px; }
+  .bd-kpi-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .bd-kpi { padding: 14px; }
+  .bd-kpi .value { font-size: 26px; }
+  .bd-card, .bd-chart-card { padding: 16px; }
+  .bd-table th, .bd-table td { padding: 8px; font-size: 13px; }
+  .bd-btn { padding: 11px 22px; }
+}
+
+/* ============ Impresión ============ */
+@media print {
+  body { background: #fff; }
+  .bd-cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .bd-card, .bd-chart-card, .bd-kpi { box-shadow: none; break-inside: avoid; }
+  .bd-section { padding-top: 24px; }
+}
+
+
+  /* Filtros de fecha */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px; }
+  .f-pill {
+    font-family: var(--bd-font); font-size: 13px; font-weight: 700;
+    padding: 7px 18px; border-radius: var(--bd-radius-pill);
+    border: 1.5px solid var(--bd-border-strong); background: var(--bd-surface);
+    color: var(--bd-text-2); cursor: pointer;
+  }
+  .f-pill:hover { border-color: var(--bd-cyan-dark); color: var(--bd-cyan-strong); }
+  .f-pill.active { background: var(--bd-cyan-dark); border-color: var(--bd-cyan-dark); color: #fff; }
+  .f-custom { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--bd-text-2); margin-left: 6px; }
+  .f-custom input[type=date] {
+    font-family: var(--bd-font); font-size: 13px; color: var(--bd-text);
+    padding: 6px 10px; border: 1.5px solid var(--bd-border-strong);
+    border-radius: var(--bd-radius-sm); background: var(--bd-surface);
+  }
+  .f-range-label { font-size: 13px; color: var(--bd-text-3); margin-left: auto; }
+
+  /* Embudo SVG */
+  .funnel-svg { width: 100%; height: auto; display: block; }
+  .funnel-svg .stage-name { fill: var(--bd-text); font-size: 14px; font-weight: 700; font-family: var(--bd-font);
+    cursor: help; text-decoration: underline dotted; text-decoration-color: var(--bd-text-3); text-underline-offset: 4px; }
+  .funnel-svg .seg { cursor: help; }
+  /* Unit economics */
+  .cost-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .cost-tile { background: var(--bd-surface); border: 1px solid var(--bd-border); border-radius: var(--bd-radius); padding: 14px 16px; }
+  .cost-tile .label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--bd-text-2); margin-bottom: 4px; cursor: help; text-decoration: underline dotted; text-decoration-color: var(--bd-text-3); text-underline-offset: 3px; display: inline-block; }
+  .cost-tile .value { font-size: 22px; font-weight: 800; letter-spacing: -.5px; color: var(--bd-heading); font-variant-numeric: tabular-nums; }
+  .cost-tile .value .unit { font-size: 13px; font-weight: 600; color: var(--bd-text-2); }
+  .cost-tile .sub { font-size: 11.5px; color: var(--bd-text-3); margin-top: 2px; }
+  .funnel-svg .stage-val  { font-size: 19px; font-weight: 800; font-family: var(--bd-font); }
+  .funnel-svg .stage-pct  { fill: var(--bd-heading); font-size: 15px; font-weight: 800; font-family: var(--bd-font); }
+  .funnel-svg .stage-pct .sub { fill: var(--bd-text-2); font-size: 11.5px; font-weight: 400; }
+  .funnel-svg .stage-pct.inside .sub { fill: inherit; opacity: .8; }
+  .funnel-svg .seg { stroke: var(--bd-surface); stroke-width: 2; }
+  .funnel-svg .conn { fill: none; stroke-width: 1.5; }
+
+  /* Listas compactas en callouts y notas desplegables */
+  .bd-callout ul { margin: 8px 0 2px; padding-left: 20px; }
+  .bd-callout li { margin-bottom: 4px; }
+  .bd-notes { margin: 0 0 24px; }
+  .bd-notes summary { font-size: 13px; font-weight: 700; color: var(--bd-text-2); cursor: pointer; }
+  .bd-notes ul { margin: 8px 0 0; padding-left: 20px; font-size: 13px; color: var(--bd-text-2); }
+  .bd-notes li { margin-bottom: 4px; }
+
+  @media (max-width: 720px) { .f-range-label { margin-left: 0; width: 100%; } }
+  @media (max-width: 640px) {
+    .cost-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .cost-tile { padding: 12px; }
+    .cost-tile .value { font-size: 19px; }
+    .f-pill { padding: 7px 14px; font-size: 12.5px; }
+    .f-custom { flex-wrap: wrap; }
+    .f-custom input[type=date] { max-width: 132px; }
+  }
+
+</style>
+
+
+<header class="bd-cover">
+  <div class="bd-container">
+    <div class="bd-logo" style="margin-bottom:28px;">brandi<span class="ia">A</span><span style="font-size:11px;vertical-align:super;">®</span></div>
+    <span class="bd-kicker">Meta Ads · Embudo de conversión</span>
+    <h1>Campaña de Leads · <strong>Jul 2026</strong></h1>
+    <p class="bd-muted" style="max-width:600px;">
+      🚀 <strong style="color:#fff;">Lanzada el 24 de julio de 2026</strong> · V1 + V2 unificadas · datos de Meta al 28-jul-2026
+    </p>
+  </div>
+</header>
+
+<main class="bd-container">
+
+  <!-- FILTROS -->
+  <section class="bd-section">
+    <span class="bd-kicker">Período</span>
+    <div class="filters" id="filters">
+      <button class="f-pill active" data-days="all">Todo (desde el lanzamiento)</button>
+      <button class="f-pill" data-days="1">Último día</button>
+      <button class="f-pill" data-days="3">Últimos 3 días</button>
+      <button class="f-pill" data-days="7">Últimos 7 días</button>
+      <span class="f-custom">
+        Personalizado: <input type="date" id="d-from"> – <input type="date" id="d-to">
+      </span>
+      <span class="f-range-label" id="range-label"></span>
+    </div>
+
+    <!-- KPIs -->
+    <div class="bd-kpi-row">
+      <div class="bd-kpi">
+        <div class="label">Inversión</div>
+        <div class="value"><span class="unit">S/</span> <span id="k-spend">—</span></div>
+      </div>
+      <div class="bd-kpi">
+        <div class="label">Leads (formularios)</div>
+        <div class="value" id="k-leads">—</div>
+      </div>
+      <div class="bd-kpi">
+        <div class="label">Costo por lead</div>
+        <div class="value"><span class="unit">S/</span> <span id="k-cpl">—</span></div>
+      </div>
+      <div class="bd-kpi">
+        <div class="label">Conv. visita → lead</div>
+        <div class="value"><span id="k-cvr">—</span><span class="unit">%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMBUDO -->
+  <section class="bd-section">
+    <div class="bd-chart-card">
+      <p class="bd-chart-title">Embudo de conversión</p>
+      <p class="bd-chart-sub" id="funnel-sub"></p>
+      <svg class="funnel-svg" viewBox="0 0 700 360" role="img"
+           aria-label="Embudo de conversión: alcance, clics en el enlace, visitas a la página, formularios completados, inicios de compra y compras">
+        <!-- Segmentos (forma ilustrativa de embudo; los valores están en las etiquetas) -->
+        <g id="segs"></g>
+        <g id="labels"></g>
+      </svg>
+      <p class="bd-faint" style="font-size:12px; margin:10px 0 0;">Forma ilustrativa — las cifras mandan. 💡 Posa el cursor sobre cada etapa para ver su definición.</p>
+    </div>
+  </section>
+
+  <!-- UNIT ECONOMICS -->
+  <section class="bd-section">
+    <span class="bd-kicker">Visión Growth</span>
+    <h2>Unit economics — costo por etapa</h2>
+    <p class="bd-muted">Costo de cada paso en el período filtrado · hover para ver la fórmula</p>
+    <div class="cost-grid" id="cost-grid">
+      <div class="cost-tile">
+        <span class="label" data-tip="CPM = inversión ÷ alcance × 1,000. Lo que pagas por exponer la marca a mil personas. Es el precio de la parte alta del embudo (awareness).">CPM · mil alcanzados</span>
+        <div class="value"><span class="unit">S/</span> <span id="c-reach">—</span></div>
+        <div class="sub">por cada 1,000 personas</div>
+      </div>
+      <div class="cost-tile">
+        <span class="label" data-tip="CPC = inversión ÷ clics en el enlace. Lo que pagas por cada persona que muestra interés y hace clic hacia la web.">CPC · clic</span>
+        <div class="value"><span class="unit">S/</span> <span id="c-clicks">—</span></div>
+        <div class="sub">por clic en el enlace</div>
+      </div>
+      <div class="cost-tile">
+        <span class="label" data-tip="Inversión ÷ visitas a la página. Siempre es mayor que el CPC: la diferencia es el 'impuesto' de los clics que se pierden antes de que cargue la landing.">Costo · visita</span>
+        <div class="value"><span class="unit">S/</span> <span id="c-lpv">—</span></div>
+        <div class="sub">por visita real a la web</div>
+      </div>
+      <div class="cost-tile">
+        <span class="label" data-tip="CPL = inversión ÷ formularios completados. El costo de adquisición de un lead — la métrica núcleo de esta campaña.">CPL · lead</span>
+        <div class="value"><span class="unit">S/</span> <span id="c-leads">—</span></div>
+        <div class="sub">por formulario completado</div>
+      </div>
+      <div class="cost-tile">
+        <span class="label" data-tip="Inversión ÷ inicios de compra. Lo que cuesta llevar a alguien hasta el checkout de un plan.">Costo · checkout</span>
+        <div class="value"><span class="unit">S/</span> <span id="c-ic">—</span></div>
+        <div class="sub">por inicio de compra</div>
+      </div>
+      <div class="cost-tile">
+        <span class="label" data-tip="CAC = inversión ÷ compras. El costo real de adquirir un cliente pagante. Mientras no haya compras, no es calculable — toda la inversión está 'río arriba'.">CAC · compra</span>
+        <span class="eye-badge" style="cursor:help; font-size:14px; margin-left:4px;" data-tip="EYE">👁</span>
+        <div class="value"><span id="c-buy">—</span></div>
+        <div class="sub">por cliente pagante</div>
+      </div>
+    </div>
+
+    <div class="bd-callout" style="margin-top:20px;">
+      <strong>Lectura Growth</strong> <span class="bd-faint">(histórico completo)</span>
+      <ul>
+        <li><strong>Clic barato, visita cara:</strong> CPC S/ 0.49 pero S/ 0.86 por visita — el 43% de los clics se pierde antes de que cargue la landing. Revisar velocidad en móvil.</li>
+        <li><strong>CPL sano:</strong> S/ 9.56 con ticket de S/ 990 — cerrar 1 de cada ~100 leads ya paga la pauta.</li>
+        <li><strong>Prioridad:</strong> el checkout cuesta S/ 51.60 y no registra compras con tarjeta 👁 — revisar checkout→pago y cruzar con ventas por transferencia antes de escalar inversión.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EVOLUCIÓN DIARIA -->
+  <section class="bd-section">
+    <span class="bd-kicker">Seguimiento</span>
+    <h2>Evolución diaria</h2>
+    <div class="bd-card">
+      <div class="bd-table-wrap">
+        <table class="bd-table">
+          <thead>
+            <tr>
+              <th>Fecha</th><th class="num">Alcance</th><th class="num">Clics</th>
+              <th class="num">Visitas</th><th class="num">Leads</th>
+              <th class="num">Checkouts</th><th class="num">Inversión</th>
+            </tr>
+          </thead>
+          <tbody id="daily-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <details class="bd-notes">
+      <summary>Notas metodológicas</summary>
+      <ul>
+        <li>El 25 y 26 de julio la campaña no tuvo entrega (sin inversión).</li>
+        <li>El alcance de varios días suma alcances diarios: una persona puede contarse más de una vez, por lo que puede diferir levemente del alcance único de Meta.</li>
+        <li>👁 "Compraron" = evento Purchase del píxel, que <strong>solo mide compras con tarjeta</strong> — las transferencias no se registran, así que las ventas reales pueden ser mayores.</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer class="bd-footer">
+    Brandia Peru S.A.C. · Cuenta publicitaria Meta 1002733045682593 · Campaña lanzada el 24-jul-2026 · Reporte generado el 28-jul-2026<br>
+    Fuente: Meta Ads API (píxel + eventos del sitio) · Elaborado por E-Qapla · Confidencial
+  </footer>
+
+</main>
+
+<script>
+/* ================= Data diaria (V1 + V2 sumadas) — Meta Ads API, 28-jul-2026 ================= */
+const DAILY = [
+  { date: '2026-07-24', reach: 1294, clicks:  28, lpv:  10, leads:  0, ic: 0, buy: 0, spend:  15.00 },
+  { date: '2026-07-25', reach:    0, clicks:   0, lpv:   0, leads:  0, ic: 0, buy: 0, spend:   0    },
+  { date: '2026-07-26', reach:    0, clicks:   0, lpv:   0, leads:  0, ic: 0, buy: 0, spend:   0    },
+  { date: '2026-07-27', reach: 8133, clicks: 230, lpv: 146, leads: 20, ic: 4, buy: 0, spend: 166.22 },
+  { date: '2026-07-28', reach: 8336, clicks: 265, lpv: 144, leads:  7, ic: 1, buy: 0, spend:  76.77 },
+];
+const LAUNCH = '2026-07-24';
+const LAST   = DAILY[DAILY.length - 1].date;
+let LAST_RANGE = [LAUNCH, LAST];
+
+/* ================= Embudo SVG (forma ilustrativa, valores reales en etiquetas) ================= */
+const STAGES = [
+  { key: 'reach',  name: 'Alcance',                rate: null,
+    def: '<span class="t-title">Alcance</span><br>Personas únicas (cuentas de Meta) que vieron el anuncio al menos una vez en el período. Es la boca del embudo: tu audiencia expuesta a la marca.' },
+  { key: 'clicks', name: 'Clics en el enlace',     rate: ['reach',  'del alcance'],
+    def: '<span class="t-title">Clics en el enlace</span><br>Clics en el enlace del anuncio hacia la web. Primera señal de interés real. El % sobre el alcance es el CTR de la campaña.' },
+  { key: 'lpv',    name: 'Visitas a la página',    rate: ['clicks', 'de los clics'],
+    def: '<span class="t-title">Visitas a la página</span><br>Cargas reales de la landing registradas por el píxel después del clic. La diferencia contra los clics es gente que abandonó antes de que la página terminara de cargar.' },
+  { key: 'leads',  name: 'Completaron formulario', rate: ['lpv', 'de visitas'],
+    def: '<span class="t-title">Completaron formulario</span><br>Evento "Lead" del píxel: enviaron el formulario de evaluación gratuita de su marca. Es la conversión principal de esta campaña.' },
+  { key: 'ic',     name: 'Inicio de compra',       rate: ['leads',  'de leads'],
+    def: '<span class="t-title">Inicio de compra</span><br>Evento "InitiateCheckout" del píxel: comenzaron el proceso de pago de un plan (Solo Registro o Nuevo Naming).' },
+  { key: 'buy',    name: 'Compraron',              rate: ['ic',     'de checkouts'], eye: true,
+    def: '<span class="t-title">Compraron</span><br>Evento "Purchase" del píxel: pago confirmado. El fondo del embudo — clientes reales. 👁 Solo registra compras con tarjeta; las transferencias no se miden.' },
+];
+const EYE_TIP = '<span class="t-title">👁 Ojo con esta métrica</span><br>Nuestro píxel solo mide compras finalizadas con tarjeta. No tiene manera de medir las compras por transferencia, así que las ventas reales pueden ser mayores a las que muestra este embudo.';
+const COLORS = ['--bd-seq-2','--bd-seq-3','--bd-seq-4','--bd-seq-5','--bd-seq-6','--bd-navy'];
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NSVG = 'http://www.w3.org/2000/svg';
+
+/* ================= Tooltip del glosario (hover) ================= */
+const tip = document.createElement('div');
+tip.className = 'bd-tooltip';
+document.body.appendChild(tip);
+function moveTip(e) {
+  const pad = 14, r = tip.getBoundingClientRect();
+  let x = e.clientX + pad, y = e.clientY + pad;
+  if (x + r.width > innerWidth - 8) x = e.clientX - r.width - pad;
+  if (y + r.height > innerHeight - 8) y = e.clientY - r.height - pad;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+function attachTip(el, html) {
+  el.addEventListener('mousemove', e => { tip.innerHTML = html; tip.classList.add('show'); moveTip(e); });
+  el.addEventListener('mouseleave', () => tip.classList.remove('show'));
+}
+
+/* Embudo responsive: escritorio = etiquetas a los costados; móvil = texto dentro
+   de los segmentos (y al costado en las etapas angostas), con tipografía mayor. */
+const MOBILE_MQ = window.matchMedia('(max-width: 640px)');
+const txt = (attrs, style, content) => {
+  const el = document.createElementNS(NSVG, 'text');
+  Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+  Object.assign(el.style, style);
+  if (content != null) el.textContent = content;
+  return el;
+};
+
+function renderFunnel() {
+  const mobile = MOBILE_MQ.matches;
+  const svg = document.querySelector('.funnel-svg');
+  const segs = document.getElementById('segs');
+  const labels = document.getElementById('labels');
+  segs.innerHTML = ''; labels.innerHTML = '';
+  // texto dentro del segmento: oscuro sobre los tonos claros, blanco sobre los oscuros
+  const INK = [css('--bd-navy'), css('--bd-navy'), css('--bd-navy'), '#fff', '#fff', '#fff'];
+  const cfg = mobile
+    ? { vb: '0 0 400 384', cx: 118, HW: [112, 94, 76, 58, 40, 22, 6], segH: 56, gap: 8 }
+    : { vb: '0 0 700 360', cx: 300, HW: [165, 138, 111, 84, 57, 30, 7], segH: 52, gap: 7 };
+  svg.setAttribute('viewBox', cfg.vb);
+  const { cx, HW, segH, gap } = cfg;
+
+  STAGES.forEach((s, i) => {
+    const yT = i * (segH + gap), yB = yT + segH, yM = yT + segH / 2;
+    // interpola el halfwidth en los bordes del gap para que el embudo se vea continuo
+    const t = segH / (segH + gap);
+    const hwB = HW[i] + (HW[i + 1] - HW[i]) * t;
+    const hwM = (HW[i] + hwB) / 2;
+    const color = css(COLORS[i]);
+    const poly = document.createElementNS(NSVG, 'polygon');
+    poly.setAttribute('points',
+      `${cx - HW[i]},${yT} ${cx + HW[i]},${yT} ${cx + hwB},${yB} ${cx - hwB},${yB}`);
+    poly.setAttribute('fill', color);
+    poly.setAttribute('class', 'seg');
+    attachTip(poly, s.def);
+    segs.appendChild(poly);
+
+    if (!mobile) {
+      /* ---- Escritorio: nombre a la izquierda, valor dentro, % a la derecha ---- */
+      const name = txt({ x: 4, y: yM + 5, class: 'stage-name' }, {}, s.name);
+      attachTip(name, s.def);
+      labels.appendChild(name);
+      if (s.eye) {
+        const b = name.getBBox();
+        const eye = txt({ x: b.x + b.width + 7, y: yM + 6, 'font-size': 15, cursor: 'help' }, {}, '👁');
+        attachTip(eye, EYE_TIP);
+        labels.appendChild(eye);
+      }
+      const val = txt({ x: cx, y: yM + 7, 'text-anchor': 'middle', class: 'stage-val', fill: INK[i], id: 'v-' + s.key }, {});
+      labels.appendChild(val);
+      const conn = document.createElementNS(NSVG, 'polyline');
+      conn.setAttribute('points', `${cx + hwM + 6},${yM} 548,${yM}`);
+      conn.setAttribute('class', 'conn');
+      conn.setAttribute('stroke', COLORS[i] === '--bd-seq-2' ? css('--bd-seq-3') : color);
+      labels.appendChild(conn);
+      const dot = document.createElementNS(NSVG, 'circle');
+      dot.setAttribute('cx', 548); dot.setAttribute('cy', yM); dot.setAttribute('r', 2.5);
+      dot.setAttribute('fill', color);
+      labels.appendChild(dot);
+      labels.appendChild(txt({ x: 558, y: yM + 5, class: 'stage-pct', id: 'r-' + s.key }, {}));
+    } else {
+      /* ---- Móvil: embudo a la izquierda, etiquetas a la derecha (todas las etapas),
+              con línea conectora en cascada — como la referencia de embudo clásica. ---- */
+      const tx = 245;
+      const conn = document.createElementNS(NSVG, 'polyline');
+      conn.setAttribute('points', `${cx + hwM + 4},${yM} ${tx - 10},${yM}`);
+      conn.setAttribute('class', 'conn');
+      conn.setAttribute('stroke', COLORS[i] === '--bd-seq-2' ? css('--bd-seq-3') : color);
+      labels.appendChild(conn);
+      const dot = document.createElementNS(NSVG, 'circle');
+      dot.setAttribute('cx', tx - 10); dot.setAttribute('cy', yM); dot.setAttribute('r', 2.5);
+      dot.setAttribute('fill', color);
+      labels.appendChild(dot);
+      const name = txt({ x: tx, y: yM - 9, class: 'stage-name' }, { fontSize: '12.5px' },
+        s.eye ? s.name + ' 👁' : s.name);
+      attachTip(name, s.def);
+      labels.appendChild(name);
+      labels.appendChild(txt({ x: tx, y: yM + 10, class: 'stage-val', id: 'v-' + s.key },
+        { fill: css('--bd-heading'), fontSize: '17px' }));
+      labels.appendChild(txt({ x: tx, y: yM + 25, class: 'stage-pct', id: 'r-' + s.key },
+        { fontSize: '11px' }));
+    }
+  });
+}
+renderFunnel();
+let wasMobile = MOBILE_MQ.matches;
+function onViewportChange() {
+  if (MOBILE_MQ.matches === wasMobile) return;
+  wasMobile = MOBILE_MQ.matches;
+  renderFunnel();
+  applyRange(...LAST_RANGE);
+}
+MOBILE_MQ.addEventListener('change', onViewportChange);
+window.addEventListener('resize', onViewportChange);
+
+/* ================= Filtros y actualización ================= */
+const fmtInt = n => n.toLocaleString('es-PE');
+const fmtMoney = n => n.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtDate = iso => { const [y, m, d] = iso.split('-'); return `${d}/${m}`; };
+const fmtDateLong = iso => {
+  const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d} ${meses[m - 1]} ${y}`;
+};
+
+function applyRange(from, to) {
+  LAST_RANGE = [from, to];
+  const rows = DAILY.filter(d => d.date >= from && d.date <= to);
+  const sum = k => rows.reduce((a, d) => a + d[k], 0);
+  const T = { reach: sum('reach'), clicks: sum('clicks'), lpv: sum('lpv'),
+              leads: sum('leads'), ic: sum('ic'), buy: sum('buy'), spend: sum('spend') };
+
+  // KPIs
+  document.getElementById('k-spend').textContent = fmtMoney(T.spend);
+  document.getElementById('k-leads').textContent = fmtInt(T.leads);
+  document.getElementById('k-cpl').textContent = T.leads ? fmtMoney(T.spend / T.leads) : '—';
+  document.getElementById('k-cvr').textContent = T.lpv ? (100 * T.leads / T.lpv).toFixed(1) : '—';
+
+  // Embudo
+  STAGES.forEach(s => {
+    document.getElementById('v-' + s.key).textContent = fmtInt(T[s.key]);
+    const r = document.getElementById('r-' + s.key);
+    let pct = '100%', sub = 'del período';
+    if (s.rate) {
+      const base = T[s.rate[0]];
+      pct = base ? `${(100 * T[s.key] / base).toFixed(1)}%` : '—';
+      sub = s.rate[1];
+    }
+    r.innerHTML = `${pct} <tspan class="sub">${sub}</tspan>`;
+  });
+
+  // Unit economics: costo por etapa
+  document.getElementById('c-reach').textContent  = T.reach  ? fmtMoney(T.spend / T.reach * 1000) : '—';
+  document.getElementById('c-clicks').textContent = T.clicks ? fmtMoney(T.spend / T.clicks) : '—';
+  document.getElementById('c-lpv').textContent    = T.lpv    ? fmtMoney(T.spend / T.lpv) : '—';
+  document.getElementById('c-leads').textContent  = T.leads  ? fmtMoney(T.spend / T.leads) : '—';
+  document.getElementById('c-ic').textContent     = T.ic     ? fmtMoney(T.spend / T.ic) : '—';
+  document.getElementById('c-buy').innerHTML      = T.buy
+    ? `<span class="unit">S/</span> ${fmtMoney(T.spend / T.buy)}`
+    : '<span style="font-size:15px; color:var(--bd-text-2);">Sin compras aún</span>';
+
+  // Tabla diaria
+  const body = document.getElementById('daily-body');
+  body.innerHTML = '';
+  rows.forEach(d => {
+    const tr = document.createElement('tr');
+    const noDelivery = d.spend === 0 && d.reach === 0;
+    tr.innerHTML = noDelivery
+      ? `<td>${fmtDate(d.date)}</td><td class="num bd-faint" colspan="6" style="text-align:left;">Sin entrega</td>`
+      : `<td>${fmtDate(d.date)}</td><td class="num">${fmtInt(d.reach)}</td><td class="num">${fmtInt(d.clicks)}</td>
+         <td class="num">${fmtInt(d.lpv)}</td><td class="num"><strong>${fmtInt(d.leads)}</strong></td>
+         <td class="num">${fmtInt(d.ic)}</td><td class="num">S/ ${fmtMoney(d.spend)}</td>`;
+    body.appendChild(tr);
+  });
+
+  // Etiquetas de rango
+  const label = from === LAUNCH && to === LAST
+    ? `Desde el lanzamiento (${fmtDateLong(LAUNCH)}) al ${fmtDateLong(LAST)}`
+    : `Del ${fmtDateLong(from)} al ${fmtDateLong(to)}`;
+  document.getElementById('range-label').textContent = label;
+  document.getElementById('funnel-sub').textContent = label;
+}
+
+function isoAddDays(iso, n) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d + n));
+  return dt.toISOString().slice(0, 10);
+}
+
+const fromInput = document.getElementById('d-from');
+const toInput = document.getElementById('d-to');
+fromInput.min = toInput.min = LAUNCH;
+fromInput.max = toInput.max = LAST;
+fromInput.value = LAUNCH; toInput.value = LAST;
+
+const pills = [...document.querySelectorAll('.f-pill')];
+pills.forEach(p => p.addEventListener('click', () => {
+  pills.forEach(q => q.classList.remove('active'));
+  p.classList.add('active');
+  const d = p.dataset.days;
+  const from = d === 'all' ? LAUNCH : (t => t < LAUNCH ? LAUNCH : t)(isoAddDays(LAST, -(Number(d) - 1)));
+  fromInput.value = from; toInput.value = LAST;
+  applyRange(from, LAST);
+}));
+[fromInput, toInput].forEach(inp => inp.addEventListener('change', () => {
+  pills.forEach(q => q.classList.remove('active'));
+  let f = fromInput.value || LAUNCH, t = toInput.value || LAST;
+  if (f > t) [f, t] = [t, f];
+  applyRange(f, t);
+}));
+
+// tooltips del glosario en las métricas de costo
+document.querySelectorAll('.cost-tile .label[data-tip]').forEach(el =>
+  attachTip(el, `<span class="t-title">${el.textContent}</span><br>${el.dataset.tip}`));
+document.querySelectorAll('.eye-badge').forEach(el => attachTip(el, EYE_TIP));
+
+applyRange(LAUNCH, LAST);
+</script>
+
+</body>
+</html>
