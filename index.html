@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brandia · Embudo de Leads Jul 2026</title>
 <meta name="robots" content="noindex">
-</head>
-<body class="bd-report">
+<title>Brandia · Embudo de Leads Jul 2026</title>
 <style>
 /* ============================================================
    BRANDIA · Design System para reportes HTML
@@ -292,6 +290,8 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .bd-section { padding-top: 24px; }
 }
 
+</style>
+<style>
 
   /* Filtros de fecha */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px; }
@@ -349,6 +349,8 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   }
 
 </style>
+</head>
+<body>
 
 
 <header class="bd-cover">
@@ -357,7 +359,7 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     <span class="bd-kicker">Meta Ads · Embudo de conversión</span>
     <h1>Campaña de Leads · <strong>Jul 2026</strong></h1>
     <p class="bd-muted" style="max-width:600px;">
-      🚀 <strong style="color:#fff;">Lanzada el 24 de julio de 2026</strong> · V1 + V2 unificadas · datos de Meta al 28-jul-2026
+      🚀 <strong style="color:#fff;">Lanzada el 24 de julio de 2026</strong> · V1 + V2 + Fiestas Patrias unificadas · datos de Meta al 29-jul-2026
     </p>
   </div>
 </header>
@@ -456,9 +458,9 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     <div class="bd-callout" style="margin-top:20px;">
       <strong>Lectura Growth</strong> <span class="bd-faint">(histórico completo)</span>
       <ul>
-        <li><strong>Clic barato, visita cara:</strong> CPC S/ 0.49 pero S/ 0.86 por visita, porque el 43% de los clics se pierde antes de que cargue la landing. Revisar velocidad en móvil.</li>
-        <li><strong>CPL sano:</strong> S/ 9.56 con ticket de S/ 990. Cerrar 1 de cada ~100 leads ya paga la pauta.</li>
-        <li><strong>Prioridad:</strong> el checkout cuesta S/ 51.60 y no registra compras con tarjeta 👁. Revisar checkout→pago y cruzar con ventas por transferencia antes de escalar inversión.</li>
+        <li><strong>Clic barato, visita cara:</strong> CPC S/ 0.45 pero S/ 0.77 por visita, porque el 41% de los clics se pierde antes de que cargue la landing. Revisar velocidad en móvil.</li>
+        <li><strong>CPL sano:</strong> S/ 7.39 con ticket de S/ 990. Cerrar 1 de cada ~100 leads ya paga la pauta.</li>
+        <li><strong>Prioridad:</strong> el checkout cuesta S/ 31.40 y no registra compras con tarjeta 👁. Revisar checkout→pago y cruzar con ventas por transferencia antes de escalar inversión.</li>
       </ul>
     </div>
   </section>
@@ -493,20 +495,21 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   </section>
 
   <footer class="bd-footer">
-    Brandia Peru S.A.C. · Cuenta publicitaria Meta 1002733045682593 · Campaña lanzada el 24-jul-2026 · Reporte generado el 28-jul-2026<br>
+    Brandia Peru S.A.C. · Cuenta publicitaria Meta 1002733045682593 · Campaña lanzada el 24-jul-2026 · Reporte generado el 29-jul-2026<br>
     Fuente: Meta Ads API (píxel + eventos del sitio) · Elaborado por E-Qapla · Confidencial
   </footer>
 
 </main>
 
 <script>
-/* ================= Data diaria (V1 + V2 sumadas): Meta Ads API, 28-jul-2026 ================= */
+/* ========== Data diaria (V1 + V2 + Fiestas Patrias sumadas): Meta Ads API, 29-jul-2026 ========== */
 const DAILY = [
-  { date: '2026-07-24', reach: 1294, clicks:  28, lpv:  10, leads:  0, ic: 0, buy: 0, spend:  15.00 },
-  { date: '2026-07-25', reach:    0, clicks:   0, lpv:   0, leads:  0, ic: 0, buy: 0, spend:   0    },
-  { date: '2026-07-26', reach:    0, clicks:   0, lpv:   0, leads:  0, ic: 0, buy: 0, spend:   0    },
-  { date: '2026-07-27', reach: 8133, clicks: 230, lpv: 146, leads: 20, ic: 4, buy: 0, spend: 166.22 },
-  { date: '2026-07-28', reach: 8336, clicks: 265, lpv: 144, leads:  7, ic: 1, buy: 0, spend:  76.77 },
+  { date: '2026-07-24', reach:  1294, clicks:  28, lpv:  10, leads:  0, ic:  0, buy: 0, spend:  15.00 },
+  { date: '2026-07-25', reach:     0, clicks:   0, lpv:   0, leads:  0, ic:  0, buy: 0, spend:   0    },
+  { date: '2026-07-26', reach:     0, clicks:   0, lpv:   0, leads:  0, ic:  0, buy: 0, spend:   0    },
+  { date: '2026-07-27', reach:  8155, clicks: 230, lpv: 146, leads: 20, ic:  4, buy: 0, spend: 166.41 },
+  { date: '2026-07-28', reach: 15051, clicks: 479, lpv: 261, leads: 20, ic:  1, buy: 0, spend: 153.62 },
+  { date: '2026-07-29', reach: 11449, clicks: 369, lpv: 237, leads: 28, ic: 11, buy: 0, spend: 167.37 },
 ];
 const LAUNCH = '2026-07-24';
 const LAST   = DAILY[DAILY.length - 1].date;
