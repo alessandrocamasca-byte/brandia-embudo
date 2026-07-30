@@ -289,11 +289,9 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .bd-card, .bd-chart-card, .bd-kpi { box-shadow: none; break-inside: avoid; }
   .bd-section { padding-top: 24px; }
 }
-
 </style>
 <style>
-
-  /* Filtros de fecha */
+/* Filtros de fecha */
   .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px; }
   .f-pill {
     font-family: var(--bd-font); font-size: 13px; font-weight: 700;
@@ -347,12 +345,9 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     .f-custom { flex-wrap: wrap; }
     .f-custom input[type=date] { max-width: 132px; }
   }
-
 </style>
 </head>
 <body>
-
-
 <header class="bd-cover">
   <div class="bd-container">
     <div class="bd-logo" style="margin-bottom:28px;">brandi<span class="ia">A</span><span style="font-size:11px;vertical-align:super;">®</span></div>
@@ -509,7 +504,7 @@ const DAILY = [
   { date: '2026-07-26', reach:     0, clicks:   0, lpv:   0, leads:  0, ic:  0, buy: 0, spend:   0    },
   { date: '2026-07-27', reach:  8155, clicks: 230, lpv: 146, leads: 20, ic:  4, buy: 0, spend: 166.41 },
   { date: '2026-07-28', reach: 15051, clicks: 479, lpv: 261, leads: 20, ic:  1, buy: 0, spend: 153.62 },
-  { date: '2026-07-29', reach: 11449, clicks: 369, lpv: 237, leads: 28, ic: 11, buy: 0, spend: 167.37 },
+  { date: '2026-07-29', reach: 11456, clicks: 369, lpv: 237, leads: 28, ic: 11, buy: 0, spend: 167.40 },
 ];
 const LAUNCH = '2026-07-24';
 const LAST   = DAILY[DAILY.length - 1].date;
@@ -752,6 +747,5 @@ document.querySelectorAll('.eye-badge').forEach(el => attachTip(el, EYE_TIP));
 
 applyRange(LAUNCH, LAST);
 </script>
-
 </body>
 </html>
