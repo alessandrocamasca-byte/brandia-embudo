@@ -337,6 +337,22 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
   .bd-notes li { margin-bottom: 4px; }
 
   @media (max-width: 720px) { .f-range-label { margin-left: 0; width: 100%; } }
+
+  /* Gráficos de evolución de costo */
+  .cost-chart { width: 100%; height: auto; display: block; overflow: visible; }
+  .cost-chart .c-grid   { stroke: var(--bd-border); stroke-width: 1; }
+  .cost-chart .c-axis   { fill: var(--bd-text-3); font-size: 11px; font-family: var(--bd-font); }
+  .cost-chart .c-line   { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .cost-chart .c-proj   { fill: none; stroke-width: 2; stroke-dasharray: 5 4; stroke-linecap: round; }
+  .cost-chart .c-ref    { stroke: var(--bd-text-3); stroke-width: 1; stroke-dasharray: 3 3; }
+  .cost-chart .c-dot    { stroke: #fff; stroke-width: 2; }
+  .cost-chart .c-hit    { fill: transparent; cursor: help; }
+  .cost-chart .c-dlabel { fill: var(--bd-text); font-size: 12px; font-weight: 700; font-family: var(--bd-font); }
+  .cost-chart .c-reflab { fill: var(--bd-text-3); font-size: 11px; font-family: var(--bd-font); }
+  .bd-legend .lg-item   { display: inline-flex; align-items: center; gap: 6px; }
+  .bd-legend .lg-swatch { width: 14px; height: 3px; border-radius: 2px; display: inline-block; }
+  .bd-legend .lg-dash   { background: repeating-linear-gradient(90deg, var(--bd-cat-2) 0 5px, transparent 5px 9px) !important; }
+  .bd-legend .lg-ref    { background: repeating-linear-gradient(90deg, var(--bd-text-3) 0 3px, transparent 3px 6px); }
   @media (max-width: 640px) {
     .cost-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .cost-tile { padding: 12px; }
@@ -460,6 +476,34 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
     </div>
   </section>
 
+  <!-- EVOLUCIÓN DEL COSTO -->
+  <section class="bd-section">
+    <span class="bd-kicker">Seguimiento</span>
+    <h2>Evolución del costo de adquisición</h2>
+    <p class="bd-muted">Costo día a día, no acumulado: cada punto es la inversión de ese día dividida entre sus resultados.</p>
+
+    <div class="bd-chart-card">
+      <p class="bd-chart-title">CPL · costo por lead</p>
+      <p class="bd-chart-sub">Inversión del día ÷ formularios completados ese día</p>
+      <div class="bd-legend">
+        <span class="lg-item"><span class="lg-swatch" style="background:var(--bd-cat-1);"></span>CPL real</span>
+        <span class="lg-item"><span class="lg-swatch lg-dash" style="background:var(--bd-cat-2);"></span>Proyección</span>
+        <span class="lg-item"><span class="lg-swatch lg-ref"></span>Promedio del período</span>
+      </div>
+      <div class="bd-chart"><svg id="chart-cpl" class="cost-chart" viewBox="0 0 720 300" role="img" aria-labelledby="chart-cpl-desc"></svg></div>
+      <p id="chart-cpl-desc" class="bd-faint" style="font-size:12px;margin:8px 0 0;">Posa el cursor sobre cada punto para ver el detalle del día.</p>
+    </div>
+
+    <div class="bd-chart-card" style="margin-top:16px;">
+      <p class="bd-chart-title">Costo por checkout</p>
+      <p class="bd-chart-sub">Inversión del día ÷ inicios de compra ese día. Escala propia: no comparable punto a punto con el CPL.</p>
+      <div class="bd-chart"><svg id="chart-ic" class="cost-chart" viewBox="0 0 720 240" role="img" aria-labelledby="chart-ic-desc"></svg></div>
+      <p id="chart-ic-desc" class="bd-faint" style="font-size:12px;margin:8px 0 0;">Días con muy pocos checkouts disparan el costo: un solo checkout el 28/07 lo llevó al máximo del período.</p>
+    </div>
+
+    <div class="bd-callout" id="cpl-reading" style="margin-top:20px;"></div>
+  </section>
+
   <!-- EVOLUCIÓN DIARIA -->
   <section class="bd-section">
     <span class="bd-kicker">Seguimiento</span>
@@ -472,6 +516,7 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
               <th>Fecha</th><th class="num">Alcance</th><th class="num">Clics</th>
               <th class="num">Visitas</th><th class="num">Leads</th>
               <th class="num">Checkouts</th><th class="num">Inversión</th>
+              <th class="num">CPL</th><th class="num">Costo/checkout</th>
             </tr>
           </thead>
           <tbody id="daily-body"></tbody>
@@ -484,6 +529,8 @@ table.bd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
       <ul>
         <li>El 25 y 26 de julio la campaña no tuvo entrega (sin inversión).</li>
         <li>El alcance de varios días suma alcances diarios: una persona puede contarse más de una vez, por lo que puede diferir levemente del alcance único de Meta.</li>
+        <li>CPL y costo por checkout de cada fila son del día (inversión del día ÷ resultados del día), no acumulados. Un día sin leads o sin checkouts se muestra con guion, porque dividir entre cero no da un costo.</li>
+        <li>La proyección del CPL es una recta de mínimos cuadrados sobre los últimos 4 días con leads, extendida 3 días. Se usa ventana corta a propósito: incluir los primeros días (el aprendizaje de Meta, cuando el CPL cayó de S/ 8.32 a S/ 4.41) haría que la recta proyectara valores irreales. Se reporta el R² para que se vea cuánto explica realmente la recta.</li>
         <li>👁 "Compraron" = evento Purchase del píxel, que <strong>solo mide compras con tarjeta</strong>: las transferencias no se registran, así que las ventas reales pueden ser mayores.</li>
       </ul>
     </details>
@@ -658,6 +705,268 @@ const fmtDateLong = iso => {
   return `${d} ${meses[m - 1]} ${y}`;
 };
 
+/* ================= Evolución de costo: gráficos y proyección ================= */
+const PROJ_DAYS  = 3;   // días proyectados hacia adelante
+/* Ventana corta a propósito: una ventana larga arrastra la caída del learning
+   phase inicial y extrapola un CPL irreal (a 7 días proyectaría S/ 1.61).
+   Con 4 días la recta describe el régimen vigente, no el arranque. */
+const FIT_WINDOW = 4;
+const R2_CLARO   = 0.6; // debajo de esto la tendencia se reporta como ruido
+
+const cplOf = d => d.leads ? d.spend / d.leads : null;
+const cicOf = d => d.ic    ? d.spend / d.ic    : null;
+
+function addDays(iso, n) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d + n));
+  return dt.toISOString().slice(0, 10);
+}
+
+function niceTicks(min, max, count) {
+  if (!(max > min)) { min = 0; max = max || 1; }
+  const mag  = Math.pow(10, Math.floor(Math.log10((max - min) / count)));
+  const norm = (max - min) / count / mag;
+  const step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag;
+  const out = [];
+  for (let v = Math.floor(min / step) * step; v <= Math.ceil(max / step) * step + step / 2; v += step)
+    out.push(+v.toFixed(10));
+  return out;
+}
+
+/* Mínimos cuadrados sobre los últimos FIT_WINDOW días con dato. */
+function fitTrend(pts) {
+  const w = pts.slice(-FIT_WINDOW);
+  if (w.length < 3) return null;
+  const n  = w.length;
+  const mx = w.reduce((a, p) => a + p.i, 0) / n;
+  const my = w.reduce((a, p) => a + p.v, 0) / n;
+  let sxy = 0, sxx = 0;
+  w.forEach(p => { sxy += (p.i - mx) * (p.v - my); sxx += (p.i - mx) * (p.i - mx); });
+  if (!sxx) return null;
+  const slope = sxy / sxx, intercept = my - slope * mx;
+  let ssr = 0, sst = 0;
+  w.forEach(p => {
+    const pred = intercept + slope * p.i;
+    ssr += (p.v - pred) * (p.v - pred);
+    sst += (p.v - my) * (p.v - my);
+  });
+  const r2 = sst ? 1 - ssr / sst : 0;
+  return { slope, intercept, n, r2, at(i) { return this.intercept + this.slope * i; } };
+}
+
+/* Racha: días consecutivos moviéndose en la misma dirección. Es un hecho
+   observado, no un modelo, así que no depende de la ventana elegida. */
+function streakOf(real) {
+  if (real.length < 2) return null;
+  const dir = Math.sign(real[real.length - 1].v - real[real.length - 2].v);
+  if (!dir) return null;
+  let k = 1;
+  for (let i = real.length - 2; i > 0; i--) {
+    if (Math.sign(real[i].v - real[i - 1].v) !== dir) break;
+    k++;
+  }
+  return { dir, days: k };
+}
+
+function svgNode(tag, attrs) {
+  const el = document.createElementNS(NSVG, tag);
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+
+function renderCostChart(id, rows, valueFn, color, opts) {
+  const svg = document.getElementById(id);
+  if (!svg) return null;
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const W = svg.viewBox.baseVal.width, H = svg.viewBox.baseVal.height;
+  const M = { t: 20, r: 18, b: 34, l: 48 };
+  const iw = W - M.l - M.r, ih = H - M.t - M.b;
+
+  const pts  = rows.map((d, i) => ({ i, date: d.date, d, v: valueFn(d) }));
+  const real = pts.filter(p => p.v != null);
+
+  if (real.length < 1) {
+    const t = svgNode('text', { x: W / 2, y: H / 2, 'text-anchor': 'middle', class: 'c-axis' });
+    t.textContent = 'Sin datos suficientes en el período seleccionado';
+    svg.appendChild(t);
+    return null;
+  }
+
+  const lastI = rows.length - 1;
+  const trend = opts.project ? fitTrend(real) : null;
+  const projPts = [];
+  if (trend) {
+    for (let i = real[real.length - 1].i + 1; i <= lastI + PROJ_DAYS; i++) {
+      const v = trend.at(i);
+      projPts.push({ i, date: addDays(rows[lastI].date, i - lastI), v: Math.max(0, v) });
+    }
+  }
+
+  /* Referencia = CPL mezclado del período (inversión total ÷ resultados totales),
+     el mismo número de la tarjeta de unit economics. No es el promedio de los
+     CPL diarios: ese promedio no pondera por volumen y daría otra cifra. */
+  const avg   = opts.refValue;
+  const maxI  = projPts.length ? projPts[projPts.length - 1].i : lastI;
+  const vals  = real.map(p => p.v).concat(projPts.map(p => p.v), avg ? [avg] : []);
+  const ticks = niceTicks(Math.min(...vals), Math.max(...vals), 4);
+  const yMin  = ticks[0], yMax = ticks[ticks.length - 1];
+
+  const X = i => M.l + (maxI ? (i / maxI) * iw : iw / 2);
+  const Y = v => M.t + ih - ((v - yMin) / (yMax - yMin || 1)) * ih;
+
+  // Grilla y eje Y. Los decimales se deciden una vez para toda la escala:
+  // mezclar "4.0" con "10" en el mismo eje se lee como un error de formato.
+  const dec = ticks[ticks.length - 1] < 10 ? 1 : 0;
+  ticks.forEach(t => {
+    svg.appendChild(svgNode('line', { x1: M.l, y1: Y(t), x2: M.l + iw, y2: Y(t), class: 'c-grid' }));
+    const lb = svgNode('text', { x: M.l - 8, y: Y(t) + 4, 'text-anchor': 'end', class: 'c-axis' });
+    lb.textContent = 'S/ ' + t.toFixed(dec);
+    svg.appendChild(lb);
+  });
+
+  // Eje X. El último día con datos y el final de la proyección se etiquetan
+  // siempre: son las dos fechas que el lector busca. El resto se reparte y se
+  // descarta lo que quede demasiado cerca de esas dos.
+  const every  = Math.ceil((maxI + 1) / 10);
+  const fijos  = [lastI].concat(projPts.length ? [maxI] : []);
+  const marcas = [];
+  for (let i = 0; i <= maxI; i += every) marcas.push(i);
+  const finales = fijos.concat(marcas.filter(i => fijos.every(f => Math.abs(X(i) - X(f)) > 42)))
+                       .sort((a, b) => a - b);
+  finales.forEach(i => {
+    const iso = i <= lastI ? rows[i].date : addDays(rows[lastI].date, i - lastI);
+    const lb = svgNode('text', { x: X(i), y: M.t + ih + 20, 'text-anchor': 'middle', class: 'c-axis' });
+    lb.textContent = fmtDate(iso);
+    svg.appendChild(lb);
+  });
+
+  // Referencia del período
+  if (avg) {
+    svg.appendChild(svgNode('line', { x1: M.l, y1: Y(avg), x2: M.l + iw, y2: Y(avg), class: 'c-ref' }));
+    // A la izquierda: la esquina derecha la ocupa la etiqueta del último punto.
+    const rl = svgNode('text', { x: M.l + 4, y: Y(avg) - 6, 'text-anchor': 'start', class: 'c-reflab' });
+    rl.textContent = (opts.refLabel || 'período') + ' S/ ' + fmtMoney(avg);
+    svg.appendChild(rl);
+  }
+
+  // Línea real: se corta en los días sin dato
+  let run = [];
+  const flush = () => {
+    if (run.length > 1) svg.appendChild(svgNode('polyline',
+      { points: run.map(p => X(p.i) + ',' + Y(p.v)).join(' '), class: 'c-line', stroke: color }));
+    run = [];
+  };
+  pts.forEach(p => { p.v == null ? flush() : run.push(p); });
+  flush();
+
+  // Proyección: arranca en el último punto real
+  if (projPts.length) {
+    const last = real[real.length - 1];
+    svg.appendChild(svgNode('polyline', {
+      points: [last].concat(projPts).map(p => X(p.i) + ',' + Y(p.v)).join(' '),
+      class: 'c-proj', stroke: 'var(--bd-cat-2)' }));
+    projPts.forEach(p => {
+      const c = svgNode('circle', { cx: X(p.i), cy: Y(p.v), r: 3.5, fill: 'var(--bd-cat-2)' });
+      svg.appendChild(c);
+      const hit = svgNode('circle', { cx: X(p.i), cy: Y(p.v), r: 14, class: 'c-hit' });
+      attachTip(hit, `<span class="t-title">${fmtDateLong(p.date)} · proyectado</span><br>
+        CPL estimado <strong>S/ ${fmtMoney(p.v)}</strong><br>
+        Extrapolación lineal de los últimos ${trend.n} días con datos. No es un pronóstico de Meta.`);
+      svg.appendChild(hit);
+    });
+  }
+
+  // Puntos reales + zona de hover
+  real.forEach(p => {
+    svg.appendChild(svgNode('circle', { cx: X(p.i), cy: Y(p.v), r: 4.5, fill: color, class: 'c-dot' }));
+    const hit = svgNode('circle', { cx: X(p.i), cy: Y(p.v), r: 16, class: 'c-hit' });
+    attachTip(hit, opts.tip(p));
+    svg.appendChild(hit);
+  });
+
+  // Etiqueta directa solo en el mejor y el último día (nunca en todos)
+  const best = real.reduce((a, p) => p.v < a.v ? p : a, real[0]);
+  const last = real[real.length - 1];
+  [best, last].forEach((p, k) => {
+    if (k === 1 && p === best) return;
+    // Cerca de un borde la etiqueta se ancla hacia adentro para no salirse del viewBox.
+    const x = X(p.i);
+    const cerca = 44;
+    const anchor = x > M.l + iw - cerca ? 'end' : (x < M.l + cerca ? 'start' : 'middle');
+    const dx = anchor === 'end' ? 6 : anchor === 'start' ? -6 : 0;
+    const lb = svgNode('text', { x: x + dx, y: Y(p.v) - 12, 'text-anchor': anchor, class: 'c-dlabel' });
+    lb.textContent = 'S/ ' + fmtMoney(p.v);
+    svg.appendChild(lb);
+  });
+
+  return { real, avg, trend, projPts, best };
+}
+
+/* Lectura en prosa, generada del dato para que no envejezca. */
+function renderCplReading(box, cpl, T, cplBlend) {
+  if (!box) return;
+  if (!cpl || cpl.real.length < 2) {
+    box.innerHTML = '<strong>Lectura del CPL</strong><ul><li>Se necesitan al menos dos días con leads en el período para leer una tendencia.</li></ul>';
+    return;
+  }
+  const { real, trend, projPts, best } = cpl;
+  const avg   = cplBlend;
+  const last  = real[real.length - 1];
+  const worst = real.reduce((a, p) => p.v > a.v ? p : a, real[0]);
+  const li = [];
+
+  // 1. Dónde estás
+  const dif = (last.v - avg) / avg * 100;
+  li.push(`<strong>Dónde estás:</strong> el CPL del período es <strong>S/ ${fmtMoney(avg)}</strong> (inversión total ÷ leads totales). El último día con datos (${fmtDate(last.date)}) cerró en <strong>S/ ${fmtMoney(last.v)}</strong>, ${Math.abs(dif) < 3 ? 'prácticamente en línea con ese nivel' : (dif < 0 ? `un ${Math.abs(dif).toFixed(0)}% por debajo de ese nivel` : `un ${dif.toFixed(0)}% por encima de ese nivel`)}.`);
+
+  // 2. Horizonte largo. Si el bloque previo toca el arranque hay que decirlo:
+  //    si no, una mejora que es solo el aprendizaje de Meta se lee como tendencia viva.
+  if (real.length >= 4) {
+    const n = Math.min(3, Math.floor(real.length / 2));
+    const rec = real.slice(-n), prev = real.slice(-2 * n, -n);
+    const mRec  = rec.reduce((a, p) => a + p.v, 0) / rec.length;
+    const mPrev = prev.reduce((a, p) => a + p.v, 0) / prev.length;
+    const ch = (mRec - mPrev) / mPrev * 100;
+    /* ¿El bloque anterior venía cayendo en picada por sí mismo? Si su propia
+       pendiente interna baja más del 10% de su nivel por día, la "mejora" es
+       en buena parte arrastre de esa caída (el aprendizaje), no un estado nuevo.
+       En régimen estable la pendiente se aplana y este aviso deja de salir. */
+    const fPrev = fitTrend(prev.map((p, k) => ({ i: k, v: p.v })));
+    const tocaArranque = fPrev && mPrev && (fPrev.slope / mPrev) < -0.10;
+    li.push(`<strong>Contra el arranque:</strong> los últimos ${n} días con leads promedian <strong>S/ ${fmtMoney(mRec)}</strong> contra S/ ${fmtMoney(mPrev)} de los ${prev.length} anteriores, ${Math.abs(ch) < 3 ? 'sin cambio relevante' : (ch < 0 ? `una mejora del ${Math.abs(ch).toFixed(0)}%` : `un encarecimiento del ${ch.toFixed(0)}%`)}.` +
+      (tocaArranque ? ` Cuidado con leer esto como tendencia viva: el bloque anterior incluye los primeros días de la campaña, cuando Meta todavía estaba aprendiendo y el CPL venía cayendo solo. Lo que pasa hoy está en el punto siguiente.` : ''));
+  }
+
+  // 3. Racha: hecho observado, sin modelo de por medio
+  const st = streakOf(real);
+  if (st && st.days >= 2) {
+    li.push(`<strong>Racha:</strong> el CPL ${st.dir > 0 ? 'sube' : 'baja'} <strong>${st.days} días seguidos</strong> (de S/ ${fmtMoney(real[real.length - 1 - st.days].v)} a S/ ${fmtMoney(last.v)}). ${st.dir > 0 ? 'Conviene revisar frecuencia y fatiga de creativo antes de subir presupuesto.' : 'La optimización va en la dirección correcta.'}`);
+  }
+
+  // 4. Proyección, con el ajuste declarado
+  if (trend && projPts.length) {
+    const end = projPts[projPts.length - 1];
+    const firme = trend.r2 >= R2_CLARO;
+    const dir = Math.abs(trend.slope) < 0.02 ? 'plano'
+              : (trend.slope > 0 ? `subiendo ~S/ ${fmtMoney(trend.slope)} por día` : `bajando ~S/ ${fmtMoney(-trend.slope)} por día`);
+    li.push(`<strong>Proyección:</strong> la recta de los últimos ${trend.n} días va ${dir} y llevaría el CPL a <strong>S/ ${fmtMoney(end.v)}</strong> el ${fmtDate(end.date)}. ` +
+      (firme
+        ? `El ajuste es consistente (R²&nbsp;${trend.r2.toFixed(2)}), así que la dirección es creíble; la magnitud exacta no.`
+        : `Ojo: el ajuste es flojo (R²&nbsp;${trend.r2.toFixed(2)}), los días oscilan más de lo que la recta explica. Léelo como alerta de dirección, no como cifra.`) +
+      ` Se excluyen los primeros días de aprendizaje: con toda la serie la recta proyectaría un CPL irreal.`);
+  }
+
+  // 5. Piso, techo y margen contra el ticket
+  li.push(`<strong>Piso y techo:</strong> el día más barato fue el ${fmtDate(best.date)} (S/ ${fmtMoney(best.v)}) y el más caro el ${fmtDate(worst.date)} (S/ ${fmtMoney(worst.v)}), una diferencia de ${(worst.v / best.v).toFixed(1)}x entre el mejor y el peor día.`);
+  if (T.leads) {
+    const leadsPorTicket = Math.round(990 / avg);
+    li.push(`<strong>Margen:</strong> a este CPL, un ticket de S/ 990 se paga con 1 venta cada ${leadsPorTicket} leads. Llevas <strong>${fmtInt(T.leads)} leads</strong> y ${T.buy ? fmtInt(T.buy) + ' compras' : 'ninguna compra registrada por el píxel 👁'}.`);
+  }
+
+  box.innerHTML = '<strong>Lectura del CPL</strong> <span class="bd-faint">(se recalcula con el filtro de fechas)</span><ul><li>' + li.join('</li><li>') + '</li></ul>';
+}
+
 function applyRange(from, to) {
   LAST_RANGE = [from, to];
   const rows = DAILY.filter(d => d.date >= from && d.date <= to);
@@ -701,12 +1010,30 @@ function applyRange(from, to) {
     const tr = document.createElement('tr');
     const noDelivery = d.spend === 0 && d.reach === 0;
     tr.innerHTML = noDelivery
-      ? `<td>${fmtDate(d.date)}</td><td class="num bd-faint" colspan="6" style="text-align:left;">Sin entrega</td>`
+      ? `<td>${fmtDate(d.date)}</td><td class="num bd-faint" colspan="8" style="text-align:left;">Sin entrega</td>`
       : `<td>${fmtDate(d.date)}</td><td class="num">${fmtInt(d.reach)}</td><td class="num">${fmtInt(d.clicks)}</td>
          <td class="num">${fmtInt(d.lpv)}</td><td class="num"><strong>${fmtInt(d.leads)}</strong></td>
-         <td class="num">${fmtInt(d.ic)}</td><td class="num">S/ ${fmtMoney(d.spend)}</td>`;
+         <td class="num">${fmtInt(d.ic)}</td><td class="num">S/ ${fmtMoney(d.spend)}</td>
+         <td class="num">${d.leads ? '<strong>S/ ' + fmtMoney(d.spend / d.leads) + '</strong>' : '<span class="bd-faint">-</span>'}</td>
+         <td class="num">${d.ic ? 'S/ ' + fmtMoney(d.spend / d.ic) : '<span class="bd-faint">-</span>'}</td>`;
     body.appendChild(tr);
   });
+
+  // Gráficos de costo y lectura
+  const cplBlend = T.leads ? T.spend / T.leads : 0;
+  const cpl = renderCostChart('chart-cpl', rows, cplOf, 'var(--bd-cat-1)', {
+    project: true, refValue: cplBlend, refLabel: 'CPL del período',
+    tip: p => `<span class="t-title">${fmtDateLong(p.date)}</span><br>
+      CPL <strong>S/ ${fmtMoney(p.v)}</strong><br>
+      ${fmtInt(p.d.leads)} leads · S/ ${fmtMoney(p.d.spend)} invertidos`
+  });
+  renderCostChart('chart-ic', rows, cicOf, 'var(--bd-cat-3)', {
+    project: false, refValue: T.ic ? T.spend / T.ic : 0, refLabel: 'período',
+    tip: p => `<span class="t-title">${fmtDateLong(p.date)}</span><br>
+      Costo por checkout <strong>S/ ${fmtMoney(p.v)}</strong><br>
+      ${fmtInt(p.d.ic)} checkouts · S/ ${fmtMoney(p.d.spend)} invertidos`
+  });
+  renderCplReading(document.getElementById('cpl-reading'), cpl, T, cplBlend);
 
   // Etiquetas de rango
   const label = from === LAUNCH && to === LAST
